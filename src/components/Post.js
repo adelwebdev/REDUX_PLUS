@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { deletePost, editPost } from "../actions/post.action";
 import Like from "./Like";
 import { isEmpty } from "./Utils";
 
@@ -18,7 +19,7 @@ const Post = ({ post }) => {
       id: post.id,
       content: editContent,
     };
-    dispatch(editContent(postData));
+    dispatch(editPost(postData));
     setEditToggle(false);
   };
 
@@ -31,7 +32,13 @@ const Post = ({ post }) => {
             alt="edit"
             onClick={() => setEditToggle(!editToggle)}
           />
-          <img src="./icons/delete.svg" alt="delete" />
+          <img
+            src="./icons/delete.svg"
+            alt="delete"
+            onClick={() => {
+              dispatch(deletePost(post.id));
+            }}
+          />
         </div>
       )}
 
@@ -47,7 +54,7 @@ const Post = ({ post }) => {
           <textarea
             autoFocus={true}
             defaultValue={post.content}
-            onChange={(e) => setEditContent(e.target.valur)}
+            onChange={(e) => setEditContent(e.target.value)}
           ></textarea>
           <input type="submit" value="Valider modification" />
         </form>

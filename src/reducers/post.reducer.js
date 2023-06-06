@@ -1,10 +1,9 @@
 import {
   ADD_POST,
-  editPost,
+  DELETE_POST,
   EDIT_POST,
   GET_POSTS,
 } from "../actions/post.action";
-import Post from "../components/Post";
 
 const initialState = {};
 
@@ -15,14 +14,16 @@ export default function postReducer(state = initialState, action) {
     case ADD_POST:
       return [action.payload, ...state];
     case EDIT_POST:
-      return state.map((Post) => {
-        if (Post.id === action.payload.id) {
+      return state.map((post) => {
+        if (post.id === action.payload.id) {
           return {
-            ...Post,
-            content: action.content.content,
+            ...post,
+            content: action.payload.content,
           };
-        }
+        } else return post;
       });
+    case DELETE_POST:
+      return state.filter((post) => post.id !== action.payload);
     default:
       return state;
   }
