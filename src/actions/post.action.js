@@ -42,8 +42,10 @@ export const deletePost = (postId) => {
 
 export const addPostLike = (data) => {
   return (dispatch) => {
-    return axios.put(`http://localhost:3000/posts/${data.id}`).then((res) => {
-      dispatch({ type: ADD_POST_LIKE, payload: data });
-    });
+    return axios
+      .put(`http://localhost:3000/posts/${data.id}`, data)
+      .then((res) => {
+        dispatch({ type: ADD_POST_LIKE, payload: data });
+      });
   };
 };
